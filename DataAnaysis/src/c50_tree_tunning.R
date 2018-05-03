@@ -7,8 +7,9 @@ require("C50")
 require("partykit")
 
 # load data
-load("data/20180425_mod_c50_10_ReadTree.RData")
-
+load("data/20180420_mod_C50_8_ReadTree.RData")
+	# if model 5 is used, then uncomment the following
+	# mod_c50_5 <- readRDS("data/20180420_mod_c50_5.RDS")
 
 # plot without preprocess to better visualize the graph
 
@@ -17,21 +18,21 @@ load("data/20180425_mod_c50_10_ReadTree.RData")
 	# to better visualize the graph, the model is trained (1) without preprocess (2) with some mix sampling to better balance the set while keep the size small for as.party.C5.0 
 # comment out as model has already trained. 	
 #set.seed(1)
-#mod_c50_10<- C5.0(x = trainingSet_smaller_2%>%select(-Class) %>% mutate(hasReadme=as.factor(hasReadme)) %>% select(-parent,-lang),
-#     y = trainingSet_smaller_2$Class,
+#mod_c50_8 <- C5.0(x = trainingSet_smaller%>%select(-Class) %>% mutate(hasReadme=as.factor(hasReadme)) %>% select(-parent),
+#     y = trainingSet_smaller$Class,
 #     trials = 50,
 #     rules=FALSE,
 #     winnow = "FALSE")
-#confusionMatrix(predict(mod_c50_8,newdata = data_two_class_test_2%>%select(-Class) %>% mutate(hasReadme=as.factor(hasReadme)) #%>% select(-parent)),data_two_class_test_2$Class,mode=c('everything'))
+#confusionMatrix(predict(mod_c50_8,newdata = data_two_class_test%>%select(-Class) %>% mutate(hasReadme=as.factor(hasReadme)) #%>% select(-parent)),data_two_class_test$Class,mode=c('everything'))
 
 
 
 # for plotting the tree
-pdf(file="data/20180425_mod_c50_10_Tree.pdf", width=100/2.54, height=60/2.54)
+pdf(file="data/20180420_mod_c50_8_Tree.pdf", width=100/2.54, height=60/2.54)
 # plot the whole tree
-plot(mod_c50_10)
-myTree2 <- C50:::as.party.C5.0(mod_c50_10)
+plot(mod_c50_8)
+myTree2 <- C50:::as.party.C5.0(mod_c50_8)
 # plot the partial tree by specifying the node number, i.e., 217
-plot(myTree2[80])
+plot(myTree2[217])
 dev.off()
 
